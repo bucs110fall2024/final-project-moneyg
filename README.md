@@ -27,6 +27,17 @@ My project is a restaurant style game in which the player can move their charact
 ![final gui](assets/finalgui.jpg)
 
 ## Program Design
+Classes
+1. Player
+- creates player character
+- allows for user to move character up, down, left, and right using keyboard keys
+
+2. Customer
+- creates customer NPCS
+- moves customer left to counter
+- creates customer "order" (task completed by player)
+
+
 
 ### Features
 
