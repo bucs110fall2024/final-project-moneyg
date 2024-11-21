@@ -1,6 +1,6 @@
 import pygame
-import Player
-import Customer
+from model_player import Player
+from model_customer import Customer
 
 class Controller:
   def __init__(self):
