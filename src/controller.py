@@ -1,10 +1,11 @@
 import pygame
 from model_player import Player
-from model_customer import Customer
+from model_enemy import Sleep
+from model_collectable import Drink
 
 class Controller:
   def __init__(self):
-    pygame.init()
+    pygame.init() #should this go in mainloop or controller?
     self.screen = pygame.display.set_mode()
     self.background = pygame.Surface(pygame.display.get_window_size())
     self.background.fill((150, 150, 250))
@@ -20,10 +21,10 @@ class Controller:
    """
    while(True): 
       #1. Handle events
-      for event in pygame.event.get():
-           if event.type == pygame.QUIT:
-               pygame.quit()
-               exit()
+    #   for event in pygame.event.get():
+    #        if event.type == pygame.QUIT:
+    #            pygame.quit()
+    #            exit()
 
       #2. detect collisions and update models
       #3. Redraw next frame

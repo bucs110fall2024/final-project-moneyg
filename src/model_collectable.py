@@ -1,24 +1,31 @@
-class Customer:
+class Drink:
     def __init__(self, x, y, img_file):
         self.x = x
         self.y = y
         self.img_file = image
         """
-        initializes the customer character (NPC)
+        initializes the falling powerups
         args: (int) x and y coordinates of position; (str) path to jpg file of character
         return: None
         """
         
-    def walk(self):
+    def fall(self):
         """
-        moves character toward counter (left)
+        moves collectables down toward the player
         args: None
         return: None
         """
         
-    def order(self):
+    def speed(self):
         """
-        creates the "order" of the customer
-        args: (str) path to jpg file of order icon
+        changes speed of various falling collectables
+        args: None
+        return: None
+        """
+    
+    def boost(self):
+        """
+        lowers sleep counter by 1
+        args: None
         return: None
         """

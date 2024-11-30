@@ -36,13 +36,5 @@ class Player:
         args: None
         return: None
         """
-        
-    def interact(self):
-        """
-        triggers new screen to open
-        args: None
-        return: None
-        """
-    
     
         
