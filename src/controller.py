@@ -62,14 +62,14 @@ class Controller:
           #health spawning
           current_time = pygame.time.get_ticks()
           if current_time >= self.collectable_spawn_time:
-            self.collectable = Drink(random.randint(0,SCREEN_WIDTH - 20),0)
+            self.collectable = Drink(random.randint(0,SCREEN_WIDTH - 20), SCREEN_HEIGHT + 50)
             self.collectable_group.add(self.collectable)
             self.collectable_spawn_time = current_time + random.randint (2000,10000)
           
           #collisions
           enemies = pygame.sprite.spritecollide(self.player, self.enemy_group, True)
           for enemy in enemies:
-            respawn_enemy = Sleep(random.randint(0,SCREEN_WIDTH - 50), -50)
+            respawn_enemy = Sleep(random.randint(0,SCREEN_WIDTH), SCREEN_HEIGHT + 50)
             self.enemy_group.add(respawn_enemy)
             #counter
             if self.lives > 0:
