@@ -22,10 +22,10 @@ class Player(pygame.sprite.Sprite):
             self.rect.x +=10
         if key[pygame.K_LEFT]: 
             self.rect.x -=10
-        # if key[pygame.K_UP]: 
-        #     self.rect.y -=10
-        # if key[pygame.K_DOWN]: 
-        #     self.rect.y +=10
+        if key[pygame.K_UP]: 
+            self.rect.y -=10
+        if key[pygame.K_DOWN]: 
+            self.rect.y +=10
         """
         moves position right, left, up, or down by 1
         args: None
