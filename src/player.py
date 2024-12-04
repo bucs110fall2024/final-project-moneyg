@@ -1,4 +1,5 @@
 import pygame
+import random
 PLAYER_SIZE = 200
 
 class Player(pygame.sprite.Sprite):
@@ -7,9 +8,14 @@ class Player(pygame.sprite.Sprite):
         #image
         image = pygame.image.load(img)
         self.image = pygame.transform.scale(image,(PLAYER_SIZE,PLAYER_SIZE))
-        self.rect = self.image.get_rect() 
-        self.rect.x = x
-        self.rect.y = y   
+        self.rect = self.image.get_rect()
+        center = self.rect.center 
+        #self.rect = pygame.Rect.inflate(self.rect,-50,-50)
+        self.hitbox = self.rect.scale_by(0.5)
+        self.hitbox.center = center
+        print(self.rect.topleft)
+        # self.rect.x = x
+        # self.rect.y = y   
         """
         initializes the player character
         args: (int) x and y coordinates of position; (file) jpg of character
@@ -26,6 +32,7 @@ class Player(pygame.sprite.Sprite):
             self.rect.y -=10
         if key[pygame.K_DOWN]: 
             self.rect.y +=10
+        self.hitbox.center = self.rect.center
         """
         moves position right, left, up, or down by 1
         args: None
@@ -33,5 +40,8 @@ class Player(pygame.sprite.Sprite):
         """
     
     def update(self):
+        if self.rect.bottom > 900 or self.rect.top < 0 or self.rect.right > 1600 or self.rect.left < 0:
+            self.rect.x = 700
+            self.rect.y = 600
+        
         self.move()
-#make speed decrease when hit by an obstacle???     

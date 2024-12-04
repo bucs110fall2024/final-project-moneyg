@@ -39,7 +39,7 @@ class Controller:
     
     #enemies
     self.enemy_group = pygame.sprite.Group()
-    for i in range(6):
+    for i in range(7):
       self.enemy = Sleep(250*i,0)
       self.enemy_group.add(self.enemy)
     
@@ -67,29 +67,38 @@ class Controller:
   """
     
   def startloop(self):
+    
+    bird_sound = pygame.mixer.Sound("assets/birds.mp3")
+    bird_sound.play(-1)
+    
     while self.state == "START":
+      #background
       start_background = pygame.transform.scale(pygame.image.load("assets/classroomwing.png"), (SCREEN_WIDTH,SCREEN_HEIGHT))
       self.screen.blit(start_background,(0,0))
       
-      pygame.mixer.music.load("assets/classroom.mp3") 
-      pygame.mixer.music.play(-1)   
-        
+      #title
       title_font = pygame.font.Font("assets/font.ttf",200)
       title = title_font.render(f"WAKE UP!!", False, "Yellow")
       self.screen.blit(title,(SCREEN_WIDTH/6, SCREEN_HEIGHT - 600))
 
+      #start button
       start_button = Button(SCREEN_WIDTH/2 - 200, SCREEN_HEIGHT - 250, color=(22,33,120), text = "GO TO CLASS")
       button_group = pygame.sprite.Group()
       button_group.add(start_button)
       
+      #button click
       for event in pygame.event.get():
         if event.type == pygame.QUIT:
           pygame.quit()
           exit()
         elif start_button.rect.collidepoint(pygame.mouse.get_pos()):
           if event.type == pygame.MOUSEBUTTONDOWN:
+              bird_sound.stop()
+              pygame.mixer.music.load("assets/classroom.mp3") 
+              pygame.mixer.music.play(-1)  
               self.state = "GAME"
       
+      #button highlight
       if start_button.rect.collidepoint(pygame.mouse.get_pos()):
           start_button.highlight()
       else:
@@ -151,6 +160,10 @@ class Controller:
         for enemy in enemies:
           respawn_enemy = Sleep(random.randint(0,SCREEN_WIDTH), SCREEN_HEIGHT + 50)
           self.enemy_group.add(respawn_enemy)
+          self.enemy_group.add(respawn_enemy)
+          self.enemy_group.add(respawn_enemy)
+          self.enemy_group.add(respawn_enemy)
+                    
           #counter
           if self.lives > 0:
             self.lives -= 1
@@ -177,11 +190,14 @@ class Controller:
             
         #draw sprites
         self.player_group.draw(self.screen)
+        print(self.player.rect.topleft)
+        pygame.draw.rect(self.screen, "red", self.player.hitbox,2)
+        print(self.player.rect.topleft)
+        self.player_group.update()
         self.enemy_group.update()
         self.enemy_group.draw(self.screen)
         self.collectable_group.update()
         self.collectable_group.draw(self.screen)
-        #print(len(self.enemy_group))
 
         pygame.display.update()
         clock.tick(80) #controls frame rate   

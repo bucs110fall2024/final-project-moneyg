@@ -24,17 +24,3 @@ class Drink(pygame.sprite.Sprite):
         args: None
         return: None
         """
-        
-    def speed(self):
-        """
-        changes speed of various falling collectables
-        args: None
-        return: None
-        """
-    
-    def boost(self):
-        """
-        lowers sleep counter by 1
-        args: None
-        return: None
-        """

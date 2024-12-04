@@ -8,9 +8,7 @@ class Sleep(pygame.sprite.Sprite):
         self.image = pygame.transform.scale(image,(SLEEP_SIZE,SLEEP_SIZE))
         self.rect = self.image.get_rect()
         self.velocity = random.randint(1,5)
-        self.rect.topleft = (x,y)
-        # self.rect.x = x
-        # self.rect.y = y   
+        self.rect.topleft = (x,y) 
         
         """
         initializes the falling obstacles
@@ -23,7 +21,7 @@ class Sleep(pygame.sprite.Sprite):
         
         if self.rect.top > 1500:
             self.rect.y = -self.rect.height
-            self.rect.x = random.randint(0,1000 - self.rect.width)
+            self.rect.x = random.randint(0,1600 - self.rect.width)
         """
         moves obstacles down toward the player
         args: None
