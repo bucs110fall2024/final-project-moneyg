@@ -23,7 +23,9 @@ My game "WAKE UP!!" involves a college student struggling to stay awake during a
 
 ### Final Design
 
-![final gui](assets/finalgui.jpg)
+![final gui](assets/fgui1.jpg)
+![final gui](assets/fgui2.jpg)
+![final gui](assets/fgui3.jpg)
 
 ## Program Design
 
