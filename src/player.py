@@ -9,11 +9,11 @@ class Player(pygame.sprite.Sprite):
         image = pygame.image.load(img)
         self.image = pygame.transform.scale(image,(PLAYER_SIZE,PLAYER_SIZE))
         self.rect = self.image.get_rect()
+        
+        #hitbox
         center = self.rect.center 
-        #self.rect = pygame.Rect.inflate(self.rect,-50,-50)
         self.hitbox = self.rect.scale_by(0.5)
         self.hitbox.center = center
-        print(self.rect.topleft)
         # self.rect.x = x
         # self.rect.y = y   
         """
@@ -32,7 +32,7 @@ class Player(pygame.sprite.Sprite):
             self.rect.y -=10
         if key[pygame.K_DOWN]: 
             self.rect.y +=10
-        self.hitbox.center = self.rect.center
+        self.hitbox.center = self.rect.center #moves hitbox with player
         """
         moves position right, left, up, or down by 1
         args: None

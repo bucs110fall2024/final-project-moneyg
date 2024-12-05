@@ -61,13 +61,12 @@ class Controller:
         self.endloop()
       elif self.state == "GAME":
         self.gameloop()
-
-  """
-  runs game program
-  """
-    
+    """
+    runs game program
+    """
+      
   def startloop(self):
-    
+    #start menu sounds
     bird_sound = pygame.mixer.Sound("assets/birds.mp3")
     bird_sound.play(-1)
     
@@ -109,18 +108,22 @@ class Controller:
 
   def endloop(self):
       while self.state == "END":
+        #background
         start_background = pygame.transform.scale(pygame.image.load("assets/teacheryelling.png"), (SCREEN_WIDTH,SCREEN_HEIGHT))
         self.screen.blit(start_background,(0,0))
         pygame.mixer.music.stop()
         
+        #end text
         end_font = pygame.font.Font("assets/font.ttf",150)
         end = end_font.render(f"YOU FELL ASLEEP!", False, "Yellow")
         self.screen.blit(end,(50, 200))
         
+        #end button
         end_button = Button(SCREEN_WIDTH/2 - 200, SCREEN_HEIGHT - 250, width=425, color=(22,33,120), text = "WAKE BACK UP")
         endbutton_group = pygame.sprite.Group()
         endbutton_group.add(end_button)
         
+        #collisions
         for event in pygame.event.get():
           if event.type == pygame.QUIT:
             pygame.quit()
@@ -130,7 +133,8 @@ class Controller:
                 self.state = "START"
                 self.lives = 3
                 self.text = self.font.render(f"ENERGY LEVELS:{self.lives}/3", False, "White")
-          
+        
+        #button highlight
         if end_button.rect.collidepoint(pygame.mouse.get_pos()):
           end_button.highlight()
         else:
@@ -160,9 +164,6 @@ class Controller:
         for enemy in enemies:
           respawn_enemy = Sleep(random.randint(0,SCREEN_WIDTH), SCREEN_HEIGHT + 50)
           self.enemy_group.add(respawn_enemy)
-          self.enemy_group.add(respawn_enemy)
-          self.enemy_group.add(respawn_enemy)
-          self.enemy_group.add(respawn_enemy)
                     
           #counter
           if self.lives > 0:
@@ -178,7 +179,8 @@ class Controller:
             drink_sound = pygame.mixer.Sound("assets/drink.mp3")
             pygame.mixer.Sound.play(drink_sound)
             self.text = self.font.render(f"ENERGY LEVELS:{self.lives}/3", False, "White")
-            
+        
+        #end game at 0 lives
         if self.lives == 0:
           self.state = "END"
           lose_sound = pygame.mixer.Sound("assets/yell.mp3")
@@ -190,9 +192,7 @@ class Controller:
             
         #draw sprites
         self.player_group.draw(self.screen)
-        print(self.player.rect.topleft)
-        pygame.draw.rect(self.screen, "red", self.player.hitbox,2)
-        print(self.player.rect.topleft)
+        pygame.draw.rect(self.screen, "red", self.player.hitbox, 2)
         self.player_group.update()
         self.enemy_group.update()
         self.enemy_group.draw(self.screen)
