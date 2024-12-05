@@ -2,6 +2,7 @@ import pygame
 import random
 
 DRINK_SIZE = 100
+
 class Drink(pygame.sprite.Sprite):
     def __init__(self, x, y, img="assets/redbull.png"):
         super().__init__()
@@ -10,9 +11,8 @@ class Drink(pygame.sprite.Sprite):
         self.rect = self.image.get_rect() 
         self.velocity = random.randint(1,5)
         self.rect.topleft = (x,y) 
- 
         """
-        initializes the falling powerups
+        initializes the falling collectables
         args: (int) x and y coordinates of position; (str) path to jpg file of character
         return: None
         """

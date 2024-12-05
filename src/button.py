@@ -1,7 +1,6 @@
 import pygame
 
 class Button(pygame.sprite.Sprite):
-
     def __init__(self, x=0, y=0, width=400, height=100, color=(200, 0, 200), text="Press Me"):
         super().__init__()
         self.image = pygame.Surface((width, height))

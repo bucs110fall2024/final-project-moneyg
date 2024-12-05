@@ -7,8 +7,23 @@ from src.collectable import Drink
 
 SCREEN_WIDTH = 1500
 SCREEN_HEIGHT = 800
+PLAYER_X = 700
 PLAYER_Y = 600
-PLAYER_X = 200
+LIVES = 3
+ENERGY_TEXT_SIZE = 50
+ENEMIES = 7
+ENEMY_DISTANCE = 250
+DRINK_TIME_LOW = 2000
+DRINK_TIME_HIGH = 10000
+TITLE_TEXT_SIZE = 200
+BUTTON_COLOR = (22,33,120)
+END_TEXT_SIZE = 150
+END_TEXT_X = 50
+END_TEXT_Y = 200
+END_BUTTON_WIDTH = 425
+SELF_TEXT_X = 10
+SELF_TEXT_Y = 0
+
 clock = pygame.time.Clock()
 
 class Controller:
@@ -27,7 +42,7 @@ class Controller:
     self.screen.blit(self.background,(0,0)) 
     
     #text
-    self.font = pygame.font.Font("assets/font.ttf",50)
+    self.font = pygame.font.Font("assets/font.ttf", ENERGY_TEXT_SIZE)
     self.lives = 3
     self.text = self.font.render(f"ENERGY LEVELS:{self.lives}/3", False, "White")
         
@@ -39,14 +54,13 @@ class Controller:
     
     #enemies
     self.enemy_group = pygame.sprite.Group()
-    for i in range(7):
-      self.enemy = Sleep(250*i,0)
+    for i in range(ENEMIES):
+      self.enemy = Sleep(ENEMY_DISTANCE*i,0)
       self.enemy_group.add(self.enemy)
     
     #collectables
     self.collectable_group = pygame.sprite.Group()
-    self.collectable_spawn_time = pygame.time.get_ticks() + random.randint(2000,10000)
-    
+    self.collectable_spawn_time = pygame.time.get_ticks() + random.randint(DRINK_TIME_LOW,DRINK_TIME_HIGH)
     """
     initializes screen
     args: None
@@ -76,12 +90,12 @@ class Controller:
       self.screen.blit(start_background,(0,0))
       
       #title
-      title_font = pygame.font.Font("assets/font.ttf",200)
+      title_font = pygame.font.Font("assets/font.ttf", TITLE_TEXT_SIZE)
       title = title_font.render(f"WAKE UP!!", False, "Yellow")
       self.screen.blit(title,(SCREEN_WIDTH/6, SCREEN_HEIGHT - 600))
 
       #start button
-      start_button = Button(SCREEN_WIDTH/2 - 200, SCREEN_HEIGHT - 250, color=(22,33,120), text = "GO TO CLASS")
+      start_button = Button(SCREEN_WIDTH/2 - 200, SCREEN_HEIGHT - 250, color=(BUTTON_COLOR), text = "GO TO CLASS")
       button_group = pygame.sprite.Group()
       button_group.add(start_button)
       
@@ -114,12 +128,12 @@ class Controller:
         pygame.mixer.music.stop()
         
         #end text
-        end_font = pygame.font.Font("assets/font.ttf",150)
+        end_font = pygame.font.Font("assets/font.ttf",END_TEXT_SIZE)
         end = end_font.render(f"YOU FELL ASLEEP!", False, "Yellow")
-        self.screen.blit(end,(50, 200))
+        self.screen.blit(end,(END_TEXT_X, END_TEXT_Y))
         
         #end button
-        end_button = Button(SCREEN_WIDTH/2 - 200, SCREEN_HEIGHT - 250, width=425, color=(22,33,120), text = "WAKE BACK UP")
+        end_button = Button(SCREEN_WIDTH/2 - 200, SCREEN_HEIGHT - 250, width=END_BUTTON_WIDTH, color=(BUTTON_COLOR), text = "WAKE BACK UP")
         endbutton_group = pygame.sprite.Group()
         endbutton_group.add(end_button)
         
@@ -131,7 +145,7 @@ class Controller:
           elif end_button.rect.collidepoint(pygame.mouse.get_pos()):
             if event.type == pygame.MOUSEBUTTONDOWN:
                 self.state = "START"
-                self.lives = 3
+                self.lives = LIVES
                 self.text = self.font.render(f"ENERGY LEVELS:{self.lives}/3", False, "White")
         
         #button highlight
@@ -157,30 +171,32 @@ class Controller:
         if current_time >= self.collectable_spawn_time:
           self.collectable = Drink(random.randint(0,SCREEN_WIDTH - 20), 0)
           self.collectable_group.add(self.collectable)
-          self.collectable_spawn_time = current_time + random.randint (2000,10000)
+          self.collectable_spawn_time = current_time + random.randint (DRINK_TIME_LOW, DRINK_TIME_HIGH)
             
         #collisions
-        enemies = pygame.sprite.spritecollide(self.player, self.enemy_group, True)
-        for enemy in enemies:
-          respawn_enemy = Sleep(random.randint(0,SCREEN_WIDTH), SCREEN_HEIGHT + 50)
-          self.enemy_group.add(respawn_enemy)
-                    
-          #counter
-          if self.lives > 0:
-            self.lives -= 1
-            snore_sound = pygame.mixer.Sound("assets/snore.mp3")
-            pygame.mixer.Sound.play(snore_sound)
-            self.text = self.font.render(f"ENERGY LEVELS:{self.lives}/3", False, "White")
+        for enemy in self.enemy_group:
+          if self.player.hitbox.colliderect(enemy.rect):
+            self.enemy_group.remove(enemy)
+            respawn_enemy = Sleep(random.randint(0,SCREEN_WIDTH), SCREEN_HEIGHT + 50)
+            self.enemy_group.add(respawn_enemy) 
+            #counter
+            if self.lives > 0:
+              self.lives -= 1
+              snore_sound = pygame.mixer.Sound("assets/snore.mp3")
+              pygame.mixer.Sound.play(snore_sound)
+              self.text = self.font.render(f"ENERGY LEVELS:{self.lives}/3", False, "White")
               
-        health = pygame.sprite.spritecollide(self.player, self.collectable_group, True)
-        for life in health:
-          if self.lives < 3:
-            self.lives += 1
-            drink_sound = pygame.mixer.Sound("assets/drink.mp3")
-            pygame.mixer.Sound.play(drink_sound)
-            self.text = self.font.render(f"ENERGY LEVELS:{self.lives}/3", False, "White")
-        
-        #end game at 0 lives
+        for drink in self.collectable_group:
+          if self.player.hitbox.colliderect(drink.rect):
+            self.collectable_group.remove(drink)
+            #counter
+            if self.lives < LIVES:
+              self.lives += 1
+              drink_sound = pygame.mixer.Sound("assets/drink.mp3")
+              pygame.mixer.Sound.play(drink_sound)
+              self.text = self.font.render(f"ENERGY LEVELS:{self.lives}/3", False, "White")
+          
+        #end game
         if self.lives == 0:
           self.state = "END"
           lose_sound = pygame.mixer.Sound("assets/yell.mp3")
@@ -188,11 +204,11 @@ class Controller:
 
         #redraw
         self.screen.blit(self.background,(0,0))
-        self.screen.blit(self.text,(10,0))
+        self.screen.blit(self.text,(SELF_TEXT_X,SELF_TEXT_Y))
             
         #draw sprites
         self.player_group.draw(self.screen)
-        pygame.draw.rect(self.screen, "red", self.player.hitbox, 2)
+        #pygame.draw.rect(self.screen, "red", self.player.hitbox, 2) to check hitbox placement
         self.player_group.update()
         self.enemy_group.update()
         self.enemy_group.draw(self.screen)

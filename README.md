@@ -10,7 +10,7 @@ Monica Gnajewski
 
 ## Project Description
 
-My project uses a movable character object controlled by the player that dodges falling "z"s to avoid falling asleep in class. There will also be falling collectables that allow the player to recover once they hit a falling "z". Once the player is hit three times in a row with no collectables, the game is over.
+My game "WAKE UP!!" involves a college student struggling to stay awake during a lecture. The player must dodge the falling "z"s and collect Red Bulls to stay awake as long as possible. If they get hit by three "z"s, they fall asleep and the game ends with the professor yelling at them. Once the game ends, the player can wake up and try staying awake through the lecture again.
 
 ***    
 
@@ -18,24 +18,14 @@ My project uses a movable character object controlled by the player that dodges 
 
 ### Initial Design
 
-![initial gui](assets/gui.jpg)
+![initial gui](assets/gui1.jpg)
+![initial gui](assets/gui2.jpg)
 
 ### Final Design
 
 ![final gui](assets/finalgui.jpg)
 
 ## Program Design
-Classes
-1. Player
-- creates player character
-- allows for user to move character up, down, left, and right using keyboard keys
-
-2. Customer
-- creates customer NPCS
-- moves customer left to counter
-- creates customer "order" (task completed by player)
-
-
 
 ### Features
 
@@ -48,54 +38,63 @@ Classes
 
 ### Classes
 
-- << You should have a list of each of your classes with a description >>
+Classes
+1. Player
+- creates player character
+- allows for user to move character up, down, left, and right using keyboard keys
+
+2. Sleep
+- creates falling obstacles
+- respawns obstacles when they move offscreen
+
+3. Drink
+
+
+
+4. Button
 
 ## ATP
 
 Test Case 1: Player Movement
-Test Description: Verify that player is able to move the character left and right using the arrow keys.
-| Step                 |Procedure                                     |Expected Results                   |
-|----------------------|:--------------------------------------------:|----------------------------------:|
-|  1                   | Start the game.                              |GUI window appears with count = 0  |
-|  2                   | Press right arrow key.                       | display changes to count = 1      |
-|  3                   | Verify that the player character moves right.|                                   |
-|  4                   | Press left arrow key.                        |                                   |
-|  5                   | Verify that the player charcter moves left.  |                                   |
+Test Description: Verify that player is able to move the character left, right, up, and down using the arrow keys.
+| Step                 |Procedure                                     |Expected Results                               |
+|----------------------|:--------------------------------------------:|----------------------------------------------:|
+|  1                   | Start the game.                              |GUI menu window appears with start button.     |
+|  2                   | Press "Go to Class" button.                  |GUI game window appears, with player at bottom.|
+|  3                   | Press right arrow key.                       |The player character moves right.              |
+|  4                   | Press left arrow key.                        |The player charcter moves left.                |
+|  5                   | Press up arrow key.                          |The player character moves up.                 |
+|  6                   | Press down arrow key.                        |The player charcter moves down.                |
 
 Test Case 2: Enemy Detection
 Test Description: Verify that enemy dissappears and player life count is decreased when colliding with an enemy.
-| Step                 |Procedure                                                   |Expected Results                   |
-|----------------------|:----------------------------------------------------------:|----------------------------------:|
-|  1                   | Start the game.                                            |GUI window appears with count = 0  |
-|  2                   | Move player charcter to collide with falling enemy.        | display changes to count = 1      |
-|  3                   | Verify that enemy dissappears when player is hit.          |                                   |
-|  4                   | Verify that life counter decreases by 1 when player is hit.|                                   |
+| Step                 |Procedure                                            |Expected Results                                       |
+|----------------------|:---------------------------------------------------:|------------------------------------------------------:|
+|  1                   | Start the game.                                     |GUI menu window appears with start button.             |
+|  2                   | Press "Go to Class" button.                         |GUI game window appears, with player at bottom.        |
+|  3                   | Move player charcter to collide with falling enemy. |Enemy dissappears and "Energy Levels" decreases by one.|
 
 Test Case 3: Collectable Detection
 Test Description: Verify that collectable dissappears and player life count is increased when colliding with a collectable.
-
-| Step                 |Procedure                                                   |Expected Results                   |
-|----------------------|:----------------------------------------------------------:|----------------------------------:|
-|  1                   | Start the game.                                            |GUI window appears with count = 0  |
-|  2                   | Move player charcter to collide with falling collectable.  | display changes to count = 1      |
-|  3                   | Verify that collectable dissappears when player is hit.    |                                   |
-|  4                   | Verify that life counter increases by 1 when player is hit.|                                   |
+| Step                 |Procedure                                            |Expected Results                                       |
+|----------------------|:---------------------------------------------------:|------------------------------------------------------:|
+|  1                   | Start the game.                                     |GUI menu window appears with start button.             |
+|  2                   | Press "Go to Class" button.                         |GUI game window appears, with player at bottom.        |
+|  3                   | Move player charcter to collide with falling drink. |Drink dissappears and "Energy Levels" increases by one.|
 
 Test Case 4: Game Over
 Test Description: Verify that gameplay ends when player loses their three lives.
-| Step                 |Procedure                                              |Expected Results                   |
-|----------------------|:-----------------------------------------------------:|----------------------------------:|
-|  1                   | Start the game.                                       |GUI window appears with count = 0  |
-|  2                   |Play until all three lives are lost.                   | display changes to count = 1      |
-|  3                   | Verify that player can no longer move their character.|                                   |
-|  4                   | Verify that "game over" message is displayed.         |                                   |
+| Step                 |Procedure                                              |Expected Results                          |
+|----------------------|:-----------------------------------------------------:|-----------------------------------------:|
+|  1                   | Start the game.                                       |GUI menu window appears with start button.|
+|  2                   | Press "Go to Class" button.                           |GUI game window appears.                  |
+|  3                   | Play until all three lives are lost.                  |GUI game over window appears.             |
 
-Test Case 5: Exit
-Test Description: Verify that clicking "x" in upper right corner closes the game. 
-| Step                 |Procedure                                              |Expected Results                   |
-|----------------------|:-----------------------------------------------------:|----------------------------------:|
-|  1                   | Start the game.                                       |GUI window appears with count = 0  |
-|  2                   | Click "x" in upper right corner.                      | display changes to count = 1      |
-|  3                   | Verify that player can exit game without error.       |                                   |
-
+Test Case 5: Restart
+Test Description: Verify that button on the end screen restarts the game. 
+| Step                 |Procedure                                              |Expected Results                          |
+|----------------------|:-----------------------------------------------------:|-----------------------------------------:|
+|  1                   | Start the game.                                       |GUI menu window appears with start button.|
+|  2                   | Play until all three lives are lost.                  |GUI game over window appears.             |
+|  3                   | Click the "Wake Back Up" button.                      |GUI menu window appears.                  |
 
