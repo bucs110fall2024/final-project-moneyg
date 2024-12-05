@@ -50,10 +50,13 @@ Classes
 - respawns obstacles when they move offscreen
 
 3. Drink
-
+- creates falling collectables
+- moves them downscreen
 
 
 4. Button
+- creates button
+- highlights when mouse hovers over
 
 ## ATP
 
