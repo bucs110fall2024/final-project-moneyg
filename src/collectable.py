@@ -2,6 +2,8 @@ import pygame
 import random
 
 DRINK_SIZE = 100
+DRINK_LOWER_SPEED = 1
+DRINK_UPPER_SPEED = 5
 
 class Drink(pygame.sprite.Sprite):
     def __init__(self, x, y, img="assets/redbull.png"):
@@ -9,7 +11,7 @@ class Drink(pygame.sprite.Sprite):
         image = pygame.image.load(img)
         self.image = pygame.transform.scale(image,(DRINK_SIZE,DRINK_SIZE))
         self.rect = self.image.get_rect() 
-        self.velocity = random.randint(1,5)
+        self.velocity = random.randint(DRINK_LOWER_SPEED, DRINK_UPPER_SPEED)
         self.rect.topleft = (x,y) 
         """
         initializes the falling collectables

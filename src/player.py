@@ -22,7 +22,6 @@ class Player(pygame.sprite.Sprite):
         center = self.rect.center 
         self.hitbox = self.rect.scale_by(0.5)
         self.hitbox.center = center
-        
         """
         initializes the player character
         args: (int) x and y coordinates of position; (file) jpg of character
@@ -40,9 +39,8 @@ class Player(pygame.sprite.Sprite):
         if key[pygame.K_DOWN]: 
             self.rect.y += PLAYER_SPEED
         self.hitbox.center = self.rect.center #moves hitbox with player
-        
         """
-        moves position right, left, up, or down by 1
+        moves position right, left, up, or down
         args: None
         return: None
         """
@@ -51,5 +49,9 @@ class Player(pygame.sprite.Sprite):
         if self.hitbox.bottom > PLAYER_DOWN_LIMIT or self.hitbox.top < 0 or self.hitbox.right > PLAYER_RIGHT_LIMIT or self.hitbox.left < 0:
             self.rect.x = PLAYER_X
             self.rect.y = PLAYER_Y
-        
         self.move()
+        """
+        handles player movement and respawns player if offscreen
+        args: None
+        return: None
+        """

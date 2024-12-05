@@ -2,6 +2,7 @@ import pygame
 import random
 
 SLEEP_SIZE = 100
+ENEMY_DOWN_LIMIT = 1500
 
 class Sleep(pygame.sprite.Sprite):
     def __init__(self, x, y, img="assets/sleepy.png"):
@@ -20,9 +21,8 @@ class Sleep(pygame.sprite.Sprite):
     def update(self):
         #movement
         self.rect.y += self.velocity
-        
         #respawn
-        if self.rect.top > 1500:
+        if self.rect.top > ENEMY_DOWN_LIMIT:
             self.rect.y = -self.rect.height
             self.rect.x = random.randint(0,1600 - self.rect.width)
         """

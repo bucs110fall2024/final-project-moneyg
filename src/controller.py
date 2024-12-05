@@ -21,8 +21,9 @@ END_TEXT_SIZE = 150
 END_TEXT_X = 50
 END_TEXT_Y = 200
 END_BUTTON_WIDTH = 425
-SELF_TEXT_X = 10
-SELF_TEXT_Y = 0
+ENERGY_TEXT_X = 10
+ENERGY_TEXT_Y = 0
+FRAME_RATE = 80
 
 clock = pygame.time.Clock()
 
@@ -76,7 +77,9 @@ class Controller:
       elif self.state == "GAME":
         self.gameloop()
     """
-    runs game program
+    manages game states
+    args: None
+    return: None
     """
       
   def startloop(self):
@@ -119,6 +122,11 @@ class Controller:
       
       button_group.draw(self.screen)
       pygame.display.update()
+    """
+    displays start screen
+    args: None
+    return: None
+    """
 
   def endloop(self):
       while self.state == "END":
@@ -155,6 +163,11 @@ class Controller:
           end_button.color_default() 
         endbutton_group.draw(self.screen)
         pygame.display.update()
+      """
+      displays end screen
+      args: None
+      return: None
+      """
 
   def gameloop(self):
       while self.state == "GAME":
@@ -189,11 +202,13 @@ class Controller:
         for drink in self.collectable_group:
           if self.player.hitbox.colliderect(drink.rect):
             self.collectable_group.remove(drink)
+            drink_sound = pygame.mixer.Sound("assets/drink.mp3")
+            pygame.mixer.Sound.play(drink_sound)
             #counter
             if self.lives < LIVES:
               self.lives += 1
-              drink_sound = pygame.mixer.Sound("assets/drink.mp3")
-              pygame.mixer.Sound.play(drink_sound)
+              # drink_sound = pygame.mixer.Sound("assets/drink.mp3")
+              # pygame.mixer.Sound.play(drink_sound)
               self.text = self.font.render(f"ENERGY LEVELS:{self.lives}/3", False, "White")
           
         #end game
@@ -201,10 +216,12 @@ class Controller:
           self.state = "END"
           lose_sound = pygame.mixer.Sound("assets/yell.mp3")
           pygame.mixer.Sound.play(lose_sound)
+          self.player.rect.x = PLAYER_X
+          self.player.rect.y = PLAYER_Y
 
         #redraw
         self.screen.blit(self.background,(0,0))
-        self.screen.blit(self.text,(SELF_TEXT_X,SELF_TEXT_Y))
+        self.screen.blit(self.text,(ENERGY_TEXT_X,ENERGY_TEXT_Y))
             
         #draw sprites
         self.player_group.draw(self.screen)
@@ -216,4 +233,9 @@ class Controller:
         self.collectable_group.draw(self.screen)
 
         pygame.display.update()
-        clock.tick(80) #controls frame rate   
+        clock.tick(FRAME_RATE) #controls frame rate   
+      """
+      displays game screen
+      args: None
+      return: None
+      """

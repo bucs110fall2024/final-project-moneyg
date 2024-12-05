@@ -53,7 +53,6 @@ Classes
 - creates falling collectables
 - moves them downscreen
 
-
 4. Button
 - creates button
 - highlights when mouse hovers over
@@ -62,14 +61,15 @@ Classes
 
 Test Case 1: Player Movement
 Test Description: Verify that player is able to move the character left, right, up, and down using the arrow keys.
-| Step                 |Procedure                                     |Expected Results                               |
-|----------------------|:--------------------------------------------:|----------------------------------------------:|
-|  1                   | Start the game.                              |GUI menu window appears with start button.     |
-|  2                   | Press "Go to Class" button.                  |GUI game window appears, with player at bottom.|
-|  3                   | Press right arrow key.                       |The player character moves right.              |
-|  4                   | Press left arrow key.                        |The player charcter moves left.                |
-|  5                   | Press up arrow key.                          |The player character moves up.                 |
-|  6                   | Press down arrow key.                        |The player charcter moves down.                |
+| Step                 |Procedure                                     |Expected Results                                |
+|----------------------|:--------------------------------------------:|-----------------------------------------------:|
+|  1                   | Start the game.                              |GUI menu window appears with start button.      |
+|  2                   | Press "Go to Class" button.                  |GUI game window appears, with player at bottom. |
+|  3                   | Press right arrow key.                       |The player character moves right.               |
+|  4                   | Press left arrow key.                        |The player charcter moves left.                 |
+|  5                   | Press up arrow key.                          |The player character moves up.                  |
+|  6                   | Press down arrow key.                        |The player charcter moves down.                 |
+|  7                   | Move player offscreen.                       |The player respawns at the bottom of the screen.|
 
 Test Case 2: Enemy Detection
 Test Description: Verify that enemy dissappears and player life count is decreased when colliding with an enemy.
